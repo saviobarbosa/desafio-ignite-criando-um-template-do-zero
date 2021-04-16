@@ -37,7 +37,7 @@ export default function Home({ postsPagination }: HomeProps) {
   const [post, setPost] = useState<Post[]>(postsPagination.results);
 
   async function handleLoadPosts() {
-    fetch(postsPagination.next_page)
+    await fetch(postsPagination.next_page)
       .then(response => response.json())
       .then(data => {
         const newPost = data.results.map(postResult => ({

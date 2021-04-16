@@ -99,7 +99,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const prismic = getPrismicClient();
   const posts = await prismic.query(
     [Prismic.Predicates.at('document.type', 'posts')],
-    { pageSize: 2, fetch: ['posts.uid']}
+    { pageSize: 1, fetch: ['posts.uid']}
   );
 
   const paths = posts.results.map(post => ({ params: { slug: post.uid }}));
