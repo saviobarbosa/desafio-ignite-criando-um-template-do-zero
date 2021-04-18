@@ -4,6 +4,7 @@ import styles from './header.module.scss';
 export default function Header() {
   return (
     <header className={styles.headerContainer}>
+
       <div className={styles.headerContent}>
           <Link href="/">
             <a>
@@ -11,6 +12,7 @@ export default function Header() {
             </a>
           </Link>
       </div>
+
     </header>
   )
 }
