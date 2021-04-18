@@ -81,8 +81,8 @@ export default function Post({ post }: PostProps) {
             <span><FiClock size={16} />{getReadingTime()} min</span>
           </div>
 
-          {post.data.content.map((content, index) => (
-            <section key={index}>
+          {post.data.content.map((content) => (
+            <section key={content.heading}>
               <h2>{content.heading}</h2>
               <div
                 dangerouslySetInnerHTML={{ __html: RichText.asHtml(content.body) }}

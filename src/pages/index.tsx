@@ -1,4 +1,3 @@
-import { GetStaticProps } from 'next';
 import { FiCalendar, FiUser } from 'react-icons/fi';
 
 import Prismic from '@prismicio/client';
@@ -61,8 +60,8 @@ export default function Home({ postsPagination }: HomeProps) {
 
       <main>
         <div className={styles.post}>
-          { post.map((result, index) => (
-            <Link href={`/post/${result.uid}`} key={result.uid ?? index}>
+          { post.map((result) => (
+            <Link href={`/post/${result.uid}`} key={result.uid}>
               <a>
                 <h1>{result.data.title}</h1>
                 <strong>{result.data.subtitle}</strong>
@@ -94,7 +93,7 @@ export default function Home({ postsPagination }: HomeProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps = async () => {
   const prismic = getPrismicClient();
   const postsResponse = await prismic.query([
     Prismic.predicates.at('document.type', 'posts')],
