@@ -13,7 +13,7 @@ import { getPrismicClient } from '../../services/prismic';
 import styles from './post.module.scss';
 import Header from '../../components/Header';
 
-interface Post {
+interface Posts {
   first_publication_date: string | null;
   data: {
     title: string;
@@ -31,7 +31,7 @@ interface Post {
 }
 
 interface PostProps {
-  post: Post;
+  post: Posts;
 }
 
 export default function Post({ post }: PostProps) {
@@ -54,20 +54,18 @@ export default function Post({ post }: PostProps) {
   }
 
   if (isFallback) {
-    return (
-      <h1>Carregando...</h1>
-    )
+    return <h1>Carregando...</h1>;
   }
 
   return (
     <>
       <Head>
-        <title>{post.data.title} | Ignews</title>
+        <title>{post.data.title} | space-traveling</title>
       </Head>
 
       <Header />
 
-      <img className={styles.banner} src={post.data.banner.url} alt=""/>
+      <img className={styles.banner} src={post.data.banner.url} alt="" />
 
       <main>
         <article className={styles.post}>
@@ -77,15 +75,23 @@ export default function Post({ post }: PostProps) {
               <FiCalendar size={16} />
               {post.first_publication_date}
             </time>
-            <span><FiUser size={16} />{post.data.author}</span>
-            <span><FiClock size={16} />{getReadingTime()} min</span>
+            <span>
+              <FiUser size={16} />
+              {post.data.author}
+            </span>
+            <span>
+              <FiClock size={16} />
+              {getReadingTime()} min
+            </span>
           </div>
 
-          {post.data.content.map((content) => (
+          {post.data.content.map(content => (
             <section key={content.heading}>
               <h2>{content.heading}</h2>
               <div
-                dangerouslySetInnerHTML={{ __html: RichText.asHtml(content.body) }}
+                dangerouslySetInnerHTML={{
+                  __html: RichText.asHtml(content.body),
+                }}
               />
             </section>
           ))}
@@ -99,15 +105,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const prismic = getPrismicClient();
   const posts = await prismic.query(
     [Prismic.Predicates.at('document.type', 'posts')],
-    { pageSize: 1, fetch: ['posts.uid']}
+    { pageSize: 1, fetch: ['posts.uid'] }
   );
 
-  const paths = posts.results.map(post => ({ params: { slug: post.uid }}));
+  const paths = posts.results.map(post => ({ params: { slug: post.uid } }));
 
   return {
     paths,
-    fallback: true
-  }
+    fallback: true,
+  };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -118,26 +124,29 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const content = response.data.content.map(cont => ({
     heading: cont.heading,
-    body: cont.body
+    body: cont.body,
   }));
 
   const post = {
     uid: response.uid,
-    first_publication_date: format(new Date(response.first_publication_date), 'd MMM y'),
+    first_publication_date: format(
+      new Date(response.first_publication_date),
+      'd MMM y'
+    ),
     data: {
       title: response.data.title,
       subtitle: response.data.subtitle,
       banner: {
-        url: response.data.banner.url
+        url: response.data.banner.url,
       },
       author: response.data.author,
-      content
+      content,
     },
-  }
+  };
 
   return {
     props: {
-      post
-    }
-  }
+      post,
+    },
+  };
 };

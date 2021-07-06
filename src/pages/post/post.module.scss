@@ -20,7 +20,8 @@
     gap: 1.5rem;
     align-items: center;
 
-    time, span {
+    time,
+    span {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -31,7 +32,8 @@
   section {
     width: 100%;
 
-    p, li {
+    p,
+    li {
       font-size: 1.125rem;
       line-height: 140%;
       color: var(--body);
