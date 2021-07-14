@@ -1,15 +1,16 @@
 .container {
-  max-width: 1120px
+  max-width: 1180px;
+  padding: 0;
 }
 
 .post {
   max-width: 720px;
   margin: 0 auto;
+  padding: 0 7.5rem;
 
   a {
     display: block;
     border: 2px solid transparent;
-
 
     & + a {
       margin-top: 2rem;
